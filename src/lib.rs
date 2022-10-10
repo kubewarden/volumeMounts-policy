@@ -9,22 +9,17 @@ use kubewarden_policy_sdk::wapc_guest as guest;
 use k8s_openapi::api::core::v1::{self as apicore, VolumeMount};
 
 extern crate kubewarden_policy_sdk as kubewarden;
-use kubewarden::{
-    logging,
-    protocol_version_guest,
-    request::ValidationRequest,
-    validate_settings,
-};
+use kubewarden::{logging, protocol_version_guest, request::ValidationRequest, validate_settings};
 
 mod settings;
 use settings::Settings;
 
-use slog::{info, o, Logger};
+use slog::{o, Logger};
 
 lazy_static! {
     static ref LOG_DRAIN: Logger = Logger::root(
         logging::KubewardenDrain::new(),
-        o!("policy" => "sample-policy")
+        o!("policy" => "volumemounts-policy")
     );
 }
 
@@ -37,9 +32,6 @@ pub extern "C" fn wapc_init() {
 
 fn validate(payload: &[u8]) -> CallResult {
     let validation_request: ValidationRequest<Settings> = ValidationRequest::new(payload)?;
-
-    info!(LOG_DRAIN, "starting validation");
-
     match validation_request.extract_pod_spec_from_object() {
         Ok(pod_spec) => {
             if let Some(pod_spec) = pod_spec {
