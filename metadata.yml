@@ -2,7 +2,7 @@ rules:
 - apiGroups: [""]
   apiVersions: ["v1"]
   resources: ["deployment","replicaset","statefulset","daemonset","replicationcontroller","job","cronjob","pod"]
-  operations: ["CREATE"]
+  operations: ["CREATE", "UPDATE"]
 mutating: false
 contextAware: false
 executionMode: kubewarden-wapc
