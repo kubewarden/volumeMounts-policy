@@ -35,10 +35,10 @@ volumeMountNames:  # list of volumeMounts.name to match using the defined reject
   - baz
 ```
 
-- `allIn` checks if all of the volumeMountNames are in the Pod/Workload resource
-- `anyIn` checks if any of the volumeMountNames are in the Pod/Workload resource
-- `allNotIn` checks if all of the volumeMountNames are not in the Pod/Workload resource
-- `anyNotIn` checks if any of the volumeMountNames are not in the Pod/Workload resource
+- `anyIn` (default): checks if any of the volumeMountNames are in the Pod/Workload resource
+- `anyNotIn`: checks if any of the volumeMountNames are not in the Pod/Workload resource
+- `allIn`: checks if all of the volumeMountNames are in the Pod/Workload resource
+- `allNotIn`: checks if all of the volumeMountNames are not in the Pod/Workload resource
 
 ## Examples
 
