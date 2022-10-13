@@ -124,7 +124,7 @@ fn validate_volume_mounts(
         volume_mount_names.insert(mount.name.to_string());
     }
     match settings.operator {
-        settings::Reject::AllIn => {
+        settings::Reject::AllAreUsed => {
             // cannot use both at once, only one or the other
             if settings.volume_mount_names.is_subset(&volume_mount_names) {
                 let mut sorted_names = settings
@@ -170,7 +170,7 @@ fn validate_volume_mounts(
                 }
             }
         }
-        settings::Reject::AllNotIn => {
+        settings::Reject::NotAllAreUsed => {
             // can use both at once, but not only one of them
             let difference: HashSet<_> = settings
                 .volume_mount_names
@@ -297,14 +297,14 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
     }
 
     #[test]
-    fn accept_pod_with_not_both_at_once() -> Result<(), ()> {
+    fn accept_pod_with_all_are_used() -> Result<(), ()> {
         let request_file = "test_data/pod_creation_volume_mounts.json";
         let tc = Testcase {
             name: String::from("not_both_at_once"),
             fixture_file: String::from(request_file),
             expected_validation_result: true,
             settings: Settings {
-                operator: settings::Reject::AllIn,
+                operator: settings::Reject::AllAreUsed,
                 volume_mount_names: HashSet::from([
                     String::from("test-var"),
                     String::from("unexistent"),
@@ -317,14 +317,14 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
     }
 
     #[test]
-    fn reject_pod_with_not_both_at_once() -> Result<(), ()> {
+    fn reject_pod_with_all_are_used() -> Result<(), ()> {
         let request_file = "test_data/pod_creation_volume_mounts.json";
         let tc = Testcase {
             name: String::from("not_both_at_once reject"),
             fixture_file: String::from(request_file),
             expected_validation_result: false,
             settings: Settings {
-                operator: settings::Reject::AllIn,
+                operator: settings::Reject::AllAreUsed,
                 volume_mount_names: HashSet::from([
                     String::from("test-var"),
                     String::from("test-var-local-aaa"),
@@ -340,14 +340,14 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
     }
 
     #[test]
-    fn accept_pod_with_only_both_at_once() -> Result<(), ()> {
+    fn accept_pod_with_not_all_are_used() -> Result<(), ()> {
         let request_file = "test_data/pod_creation_volume_mounts_only2.json";
         let tc = Testcase {
             name: String::from("only_both_at_once"),
             fixture_file: String::from(request_file),
             expected_validation_result: true,
             settings: Settings {
-                operator: settings::Reject::AllNotIn,
+                operator: settings::Reject::NotAllAreUsed,
                 volume_mount_names: HashSet::from([
                     String::from("test-var"),
                     String::from("test-var-local-aaa"),
@@ -360,14 +360,14 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
     }
 
     #[test]
-    fn reject_pod_with_only_both_at_once() -> Result<(), ()> {
+    fn reject_pod_with_not_all_are_used() -> Result<(), ()> {
         let request_file = "test_data/pod_creation_volume_mounts_only2.json";
         let tc = Testcase {
             name: String::from("only_both_at_once reject"),
             fixture_file: String::from(request_file),
             expected_validation_result: false,
             settings: Settings {
-                operator: settings::Reject::AllNotIn,
+                operator: settings::Reject::NotAllAreUsed,
                 volume_mount_names: HashSet::from([
                     String::from("test-var"),
                     String::from("nonexistent"),

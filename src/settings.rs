@@ -14,11 +14,11 @@ pub(crate) struct Settings {
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::enum_variant_names)] // allow for all to end in `In`
 pub enum Reject {
-    AllIn,
     #[default]
     AnyIn,
     AnyNotIn,
-    AllNotIn,
+    AllAreUsed,
+    NotAllAreUsed,
 }
 
 impl kubewarden::settings::Validatable for Settings {
