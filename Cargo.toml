@@ -1,0 +1,20 @@
+[package]
+name = "volumemounts-policy"
+version = "0.1.0"
+authors = ["Víctor Cuadrado Juan <vcuadradojuan@suse.de>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+k8s-openapi = { version = "0.15.0", default_features = false, features = ["v1_24"] }
+kubewarden-policy-sdk = "0.8.0"
+lazy_static = "1.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+slog = "2.7"
+anyhow = "1.0"
+
+[dev-dependencies]
+serde_yaml = "0.9"
