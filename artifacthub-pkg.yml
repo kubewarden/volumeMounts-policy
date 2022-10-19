@@ -1,5 +1,5 @@
 ---
-version: 0.1.0
+version: 0.1.1
 name: volumemounts
 displayName: volumeMounts
 createdAt: '2022-07-19T16:39:10+02:00'
@@ -11,7 +11,7 @@ license: Apache-2.0
 homeURL: https://kubewarden.io
 containersImages:
 - name: policy
-  image: "ghcr.io/kubewarden/policies/volumemounts-policy:v0.1.0"
+  image: "ghcr.io/kubewarden/policies/volumemounts:v0.1.1"
 keywords:
 - container
 - volumeMounts
