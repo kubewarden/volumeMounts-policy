@@ -7,7 +7,7 @@ mutating: false
 contextAware: false
 executionMode: kubewarden-wapc
 annotations:
-  io.kubewarden.policy.title: volumemounts-policy
+  io.kubewarden.policy.title: volumemounts
   io.kubewarden.policy.description: Policy that inspects containers, init containers, and ephemeral containers, and restricts their usage of volumes by  checking the `volume` name being used in `volumeMounts[*].name`
   io.kubewarden.policy.author: Víctor Cuadrado Juan <vcuadradojuan@suse.de>
   io.kubewarden.policy.url: https://github.com/yourorg/volumemounts-policy

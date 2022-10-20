@@ -27,8 +27,8 @@ jobs:
     uses: kubewarden/github-actions/.github/workflows/reusable-release-policy-rust.yml@v1
     with:
       input-wasm: volumemounts_policy
-      oci-target: ghcr.io/kubewarden/policies/volumemounts-policy
-    
+      oci-target: ghcr.io/kubewarden/policies/volumemounts
+
     secrets:
       workflow-pat: ${{ secrets.WORKFLOW_PAT }}
-    
+
