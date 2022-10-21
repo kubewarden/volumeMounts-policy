@@ -23,6 +23,9 @@ pub enum Reject {
 
 impl kubewarden::settings::Validatable for Settings {
     fn validate(&self) -> Result<(), String> {
+        if self.volume_mounts_names.is_empty() {
+            return Err("volumeMountsNames is empty".to_string());
+        }
         Ok(())
     }
 }
@@ -30,6 +33,7 @@ impl kubewarden::settings::Validatable for Settings {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use kubewarden_policy_sdk::settings::Validatable;
 
     #[test]
     fn test_policy_with_no_settings() -> Result<(), ()> {
@@ -41,6 +45,10 @@ mod tests {
         assert!(
             matches!(settings.as_ref().unwrap().operator, Reject::AnyIn),
             "operator should be 'anyIn' when not defined by the user"
+        );
+        assert!(
+            settings.unwrap().validate().is_err(),
+            "validating empty settings should fail as empty names set"
         );
         Ok(())
     }
