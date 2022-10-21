@@ -1,4 +1,4 @@
 reject: AnyIn
-volumeMountNames:
+volumeMountsNames:
   - test-var
   - test-data

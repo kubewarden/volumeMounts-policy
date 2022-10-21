@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "camelCase")]
 pub(crate) struct Settings {
     pub operator: Reject,
-    pub volume_mount_names: HashSet<String>,
+    pub volume_mounts_names: HashSet<String>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -49,7 +49,7 @@ mod tests {
     fn test_policy_with_settings() -> Result<(), serde_yaml::Error> {
         let payload = "
 operator: anyNotIn
-volumeMountNames:
+volumeMountsNames:
   - test1
 ";
         let settings = serde_yaml::from_str::<Settings>(payload);
@@ -61,7 +61,7 @@ volumeMountNames:
         assert!(settings
             .as_ref()
             .unwrap()
-            .volume_mount_names
+            .volume_mounts_names
             .contains(&"test1".to_string()));
         Ok(())
     }
