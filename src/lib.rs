@@ -119,16 +119,16 @@ fn validate_volume_mounts(
     volume_mounts: &[VolumeMount],
     settings: &settings::Settings,
 ) -> Result<()> {
-    let mut volume_mount_names: HashSet<String> = HashSet::new();
+    let mut volume_mounts_names: HashSet<String> = HashSet::new();
     for mount in volume_mounts {
-        volume_mount_names.insert(mount.name.to_string());
+        volume_mounts_names.insert(mount.name.to_string());
     }
     match settings.operator {
         settings::Reject::AllAreUsed => {
             // cannot use both at once, only one or the other
-            if settings.volume_mount_names.is_subset(&volume_mount_names) {
+            if settings.volume_mounts_names.is_subset(&volume_mounts_names) {
                 let mut sorted_names = settings
-                    .volume_mount_names
+                    .volume_mounts_names
                     .clone()
                     .into_iter()
                     .collect::<Vec<String>>();
@@ -143,8 +143,8 @@ fn validate_volume_mounts(
         settings::Reject::AnyIn => {
             // denylist
             let intersection: HashSet<_> = settings
-                .volume_mount_names
-                .intersection(&volume_mount_names)
+                .volume_mounts_names
+                .intersection(&volume_mounts_names)
                 .collect();
             match intersection.is_empty() {
                 true => Ok(()),
@@ -158,8 +158,8 @@ fn validate_volume_mounts(
         }
         settings::Reject::AnyNotIn => {
             // allowlist
-            let difference: HashSet<_> = volume_mount_names
-                .difference(&settings.volume_mount_names)
+            let difference: HashSet<_> = volume_mounts_names
+                .difference(&settings.volume_mounts_names)
                 .collect();
             match difference.is_empty() {
                 true => Ok(()),
@@ -173,8 +173,8 @@ fn validate_volume_mounts(
         settings::Reject::NotAllAreUsed => {
             // can use both at once, but not only one of them
             let difference: HashSet<_> = settings
-                .volume_mount_names
-                .difference(&volume_mount_names)
+                .volume_mounts_names
+                .difference(&volume_mounts_names)
                 .collect();
             match difference.is_empty() {
                 true => Ok(()),
@@ -217,7 +217,7 @@ mod tests {
             expected_validation_result: true,
             settings: Settings {
                 operator: settings::Reject::AnyIn,
-                volume_mount_names: HashSet::from([String::from("test1")]),
+                volume_mounts_names: HashSet::from([String::from("test1")]),
             },
         };
 
@@ -234,7 +234,7 @@ mod tests {
             expected_validation_result: false,
             settings: Settings {
                 operator: settings::Reject::AnyIn,
-                volume_mount_names: HashSet::from([
+                volume_mounts_names: HashSet::from([
                     String::from("test-var"),
                     String::from("test-data"),
                 ]),
@@ -259,7 +259,7 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
             expected_validation_result: true,
             settings: Settings {
                 operator: settings::Reject::AnyNotIn,
-                volume_mount_names: HashSet::from([
+                volume_mounts_names: HashSet::from([
                     String::from("test-var"),
                     String::from("test-data"),
                     String::from("test-var-local-aaa"),
@@ -281,7 +281,7 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
             expected_validation_result: false,
             settings: Settings {
                 operator: settings::Reject::AnyNotIn,
-                volume_mount_names: HashSet::from([String::from("unexistent")]),
+                volume_mounts_names: HashSet::from([String::from("unexistent")]),
             },
         };
 
@@ -305,7 +305,7 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
             expected_validation_result: true,
             settings: Settings {
                 operator: settings::Reject::AllAreUsed,
-                volume_mount_names: HashSet::from([
+                volume_mounts_names: HashSet::from([
                     String::from("test-var"),
                     String::from("unexistent"),
                 ]),
@@ -325,7 +325,7 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
             expected_validation_result: false,
             settings: Settings {
                 operator: settings::Reject::AllAreUsed,
-                volume_mount_names: HashSet::from([
+                volume_mounts_names: HashSet::from([
                     String::from("test-var"),
                     String::from("test-var-local-aaa"),
                 ]),
@@ -348,7 +348,7 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
             expected_validation_result: true,
             settings: Settings {
                 operator: settings::Reject::NotAllAreUsed,
-                volume_mount_names: HashSet::from([
+                volume_mounts_names: HashSet::from([
                     String::from("test-var"),
                     String::from("test-var-local-aaa"),
                 ]),
@@ -368,7 +368,7 @@ container init-myservice2 is invalid: volumeMount names not allowed: [\"test-var
             expected_validation_result: false,
             settings: Settings {
                 operator: settings::Reject::NotAllAreUsed,
-                volume_mount_names: HashSet::from([
+                volume_mounts_names: HashSet::from([
                     String::from("test-var"),
                     String::from("nonexistent"),
                 ]),

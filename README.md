@@ -29,16 +29,16 @@ Both have trade-offs:
 ## Settings
 ```yaml
 reject: anyIn # one of anyIn (default, denylist), anyNotIn (allowlist), allAreUsed, notAllAreUsed
-volumeMountNames:  # list of volumeMounts.name to match using the defined reject operator
+volumeMountsNames:  # list of volumeMounts.name to match using the defined reject operator
   - foo
   - bar
   - baz
 ```
 
-- `anyIn` (default): checks if any of the volumeMountNames are in the Pod/Workload resource
-- `anyNotIn`: checks if any of the volumeMountNames are not in the Pod/Workload resource
-- `allAreUsed`: checks if all of the volumeMountNames are in the Pod/Workload resource
-- `notAllAreUsed`: checks if all of the volumeMountNames are not in the Pod/Workload resource
+- `anyIn` (default): checks if any of the volumeMountsNames are in the Pod/Workload resource
+- `anyNotIn`: checks if any of the volumeMountsNames are not in the Pod/Workload resource
+- `allAreUsed`: checks if all of the volumeMountsNames are in the Pod/Workload resource
+- `notAllAreUsed`: checks if all of the volumeMountsNames are not in the Pod/Workload resource
 
 ## Examples
 
@@ -53,7 +53,7 @@ volumeMountsNames:
 ```yaml
 # allowlist, only allow volumeMounts named `my-volume3` or `my-volume4`
 reject: anyNotIn
-volumeMounts:
+volumeMountsNames:
   - my-volume3
   - my-volume4
 ```
@@ -61,7 +61,7 @@ volumeMounts:
 ```yaml
 # container cannot use both volumes at once, only one or the other
 reject: allAreUsed
-volumeMounts:
+volumeMountsNames:
   - my-volume5
   - my-volume6
 ```
@@ -69,7 +69,7 @@ volumeMounts:
 ```yaml
 # container can use both volumes at once, but not only one of them
 reject: notAllAreSused
-volumeMounts:
+volumeMountsNames:
   - my-volume5
   - my-volume6
 ```
