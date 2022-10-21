@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 @test "Accept a pod without volumemounts" {
-	run kwctl run  --request-path test_data/pod_creation.json  annotated-policy.wasm
+	run kwctl run  --request-path test_data/pod_creation.json --settings-path test_data/settings_reject.yaml annotated-policy.wasm
 	[ "$status" -eq 0 ]
 	echo "$output"
 	[ $(expr "$output" : '.*"allowed":true.*') -ne 0 ]
