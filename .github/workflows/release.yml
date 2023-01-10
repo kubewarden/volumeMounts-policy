@@ -28,7 +28,3 @@ jobs:
     with:
       input-wasm: volumemounts_policy
       oci-target: ghcr.io/kubewarden/policies/volumemounts
-
-    secrets:
-      workflow-pat: ${{ secrets.WORKFLOW_PAT }}
-
