@@ -1,6 +1,6 @@
 [package]
 name = "volumemounts-policy"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Víctor Cuadrado Juan <vcuadradojuan@suse.de>"]
 edition = "2018"
 
