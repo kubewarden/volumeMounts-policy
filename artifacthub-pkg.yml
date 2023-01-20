@@ -1,8 +1,8 @@
 ---
-version: 0.1.1
+version: 0.1.3
 name: volumemounts
 displayName: volumeMounts
-createdAt: '2022-07-19T16:39:10+02:00'
+createdAt: '2023-01-19T14:46:21+02:00'
 description: |
   Policy that inspects containers, init containers, and ephemeral containers, and
   restricts their usage of volumes by  checking the `volume` name being used in
@@ -11,7 +11,7 @@ license: Apache-2.0
 homeURL: https://kubewarden.io
 containersImages:
 - name: policy
-  image: "ghcr.io/kubewarden/policies/volumemounts:v0.1.1"
+  image: "ghcr.io/kubewarden/policies/volumemounts:v0.1.3"
 keywords:
 - container
 - volumeMounts
@@ -31,3 +31,42 @@ annotations:
   kubewarden/resources: Pod,Deployment,Replicaset,Statefulset,Daemonset,Replicationcontroller,Job,Cronjob
   kubewarden/mutation: false
   kubewarden/contextAware: false
+  kubewarden/rules: |
+    rules:
+    - apiGroups: [""]
+      apiVersions: ["v1"]
+      resources: ["deployment","replicaset","statefulset","daemonset","replicationcontroller","job","cronjob","pod"]
+      operations: ["CREATE", "UPDATE"]
+  kubewarden/questions-ui: |
+    questions:
+    - default: null
+      description: >-
+        This policy inspects containers, init containers, or ephemeral containers,
+        and will restrict their usage of volumes by checking the volume name being
+        used in volumeMounts[*].name. The policy can target either Pods or workload
+        resources (Deployments, ReplicaSets, DaemonSets, ReplicationControllers,
+        Jobs, CronJobs) by setting the policy's spec.rules accordingly.
+      group: Settings
+      label: Description
+      required: false
+      hide_input: true
+      type: string
+      variable: description
+    - default: anyIn
+      group: Settings
+      label: Reject
+      options:
+        - anyIn
+        - anyNotIn
+        - allAreUsed
+        - notAllAreUsed
+      required: false
+      type: enum
+      variable: reject
+    - default: []
+      description: A list of Volume Mount names to match using the defined reject operator.
+      group: Settings
+      label: Volume Mount Names
+      required: false
+      type: array[
+      variable: volumeMountsNames
