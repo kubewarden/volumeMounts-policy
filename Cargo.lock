@@ -630,7 +630,7 @@ dependencies = [
 
 [[package]]
 name = "volumemounts-policy"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "anyhow",
  "k8s-openapi",
