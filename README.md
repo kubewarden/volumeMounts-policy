@@ -68,7 +68,7 @@ volumeMountsNames:
 
 ```yaml
 # container can use both volumes at once, but not only one of them
-reject: notAllAreSused
+reject: notAllAreUsed
 volumeMountsNames:
   - my-volume5
   - my-volume6
