@@ -4,16 +4,16 @@
 #
 # This config can be saved to its default location with:
 #   kwctl scaffold artifacthub > artifacthub-pkg.yml 
-version: 0.1.5
+version: 0.1.6
 name: volumemounts
 displayName: volumeMounts
-createdAt: 2023-03-20T16:35:06.553377885Z
+createdAt: 2023-03-24T16:19:59.447917909Z
 description: Policy that inspects containers, init containers, and ephemeral containers, and restricts their usage of volumes by  checking the `volume` name being used in `volumeMounts[*].name`
 license: Apache-2.0
 homeURL: https://github.com/kubewarden/volumemounts-policy
 containersImages:
 - name: policy
-  image: ghcr.io/kubewarden/policies/volumemounts:v0.1.5
+  image: ghcr.io/kubewarden/policies/volumemounts:v0.1.6
 keywords:
 - container
 - volumeMounts
@@ -22,13 +22,13 @@ keywords:
 - workload resources
 links:
 - name: policy
-  url: https://github.com/kubewarden/volumemounts-policy/releases/download/v0.1.5/policy.wasm
+  url: https://github.com/kubewarden/volumemounts-policy/releases/download/v0.1.6/policy.wasm
 - name: source
   url: https://github.com/kubewarden/volumemounts-policy
 install: |
   The policy can be obtained using [`kwctl`](https://github.com/kubewarden/kwctl):
   ```console
-  kwctl pull ghcr.io/kubewarden/policies/volumemounts:v0.1.5
+  kwctl pull ghcr.io/kubewarden/policies/volumemounts:v0.1.6
   ```
 maintainers:
 - name: Kubewarden developers
