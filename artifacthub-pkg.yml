@@ -7,7 +7,7 @@
 version: 0.1.7
 name: volumemounts
 displayName: volumeMounts
-createdAt: 2023-07-10T16:03:04.118723956Z
+createdAt: 2023-10-16T07:21:56.999641643Z
 description: Policy that inspects containers, init containers, and ephemeral containers, and restricts their usage of volumes by  checking the `volume` name being used in `volumeMounts[*].name`
 license: Apache-2.0
 homeURL: https://github.com/kubewarden/volumemounts-policy
@@ -29,6 +29,10 @@ install: |
   The policy can be obtained using [`kwctl`](https://github.com/kubewarden/kwctl):
   ```console
   kwctl pull ghcr.io/kubewarden/policies/volumemounts:v0.1.7
+  ```
+  Then, generate the policy manifest and tune it to your liking. For example:
+  ```console
+  kwctl scaffold manifest -t ClusterAdmissionPolicy registry://ghcr.io/kubewarden/policies/volumemounts:v0.1.7
   ```
 maintainers:
 - name: Kubewarden developers
