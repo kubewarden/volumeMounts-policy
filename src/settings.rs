@@ -70,7 +70,7 @@ volumeMountsNames:
             .as_ref()
             .unwrap()
             .volume_mounts_names
-            .contains(&"test1".to_string()));
+            .contains("test1"));
         Ok(())
     }
 }
